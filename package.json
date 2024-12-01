@@ -1,0 +1,12 @@
+{
+  "name": "react-node-concurrent",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm start --prefix backend\" \"npm start --prefix frontend\""
+  },
+  "dependencies": {
+    "concurrently": "^9.1.0",
+    "marked": "^15.0.3"
+  }
+}
