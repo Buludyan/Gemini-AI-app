@@ -5,7 +5,7 @@ import ChatsList from '../../components/ChatsList';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import CreateIcon from '@mui/icons-material/Create';
+import AddIcon from '@mui/icons-material/Add';
 import { Tooltip, useMediaQuery } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useActions } from '../../store/store';
@@ -20,10 +20,13 @@ const SidebarContent = () => {
 
   return (
     <Box>
-      <Toolbar>
-        <Typography variant="body1" marginRight={1}>
-          AI Chat
-        </Typography>
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography variant="body1">AI Chat</Typography>
         <Tooltip title="Start new chat">
           <IconButton
             onClick={() => {
@@ -35,7 +38,7 @@ const SidebarContent = () => {
               }
             }}
           >
-            <CreateIcon />
+            <AddIcon />
           </IconButton>
         </Tooltip>
       </Toolbar>

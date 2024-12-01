@@ -1,4 +1,5 @@
 import sqlite3 from 'sqlite3';
+import { ChatListItem } from './interfaces';
 
 const db = new sqlite3.Database('./chat.db', (err) => {
   if (err) {
@@ -17,9 +18,9 @@ db.serialize(() => {
   )`);
 });
 
-export function saveConversation(conversation: any) {
+export function saveConversation(conversation: ChatListItem) {
   const { id, title, messages } = conversation;
-  const messagesJson = JSON.stringify(messages); // Store messages as JSON
+  const messagesJson = JSON.stringify(messages);
 
   const stmt = db.prepare('INSERT OR REPLACE INTO conversations (id, title, messages) VALUES (?, ?, ?)');
   stmt.run(id, title, messagesJson, (err: any) => {
@@ -30,7 +31,7 @@ export function saveConversation(conversation: any) {
   stmt.finalize();
 }
 
-export function getConversationById(conversationId: any, callback: any) {
+export function getConversationById(conversationId: string, callback: any) {
   db.get('SELECT * FROM conversations WHERE id = ?', [conversationId], (err, row: any) => {
     if (err) {
       console.error('Error fetching conversation:', err);
@@ -48,7 +49,7 @@ export function getConversationById(conversationId: any, callback: any) {
   });
 }
 
-export function getAllConversations(callback: any) {
+export function getAllConversations(callback: (conversations: ChatListItem[]) => void) {
   db.all('SELECT * FROM conversations ORDER BY timestamp DESC', [], (err, rows) => {
     if (err) {
       console.error('Error fetching conversations:', err);
